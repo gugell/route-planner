@@ -1,0 +1,16 @@
+name: route-planner
+
+packages:
+  - apps/**
+  - packages/**
+
+scripts:
+  prepare: melos bootstrap
+  post:boostrap: melos exec -- dart run build_runner build --delete-conflicting-outputs
+
+sdkPath: .fvm/flutter_sdk
+
+command:
+  bootstrap:
+    hooks:
+      post: melos run post:boostrap
