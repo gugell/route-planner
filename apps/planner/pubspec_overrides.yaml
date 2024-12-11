@@ -1,0 +1,6 @@
+# melos_managed_dependency_overrides: common,core_api
+dependency_overrides:
+  common:
+    path: ../../packages/core/common
+  core_api:
+    path: ../../packages/core/api
