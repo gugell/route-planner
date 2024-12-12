@@ -8,7 +8,7 @@ class RoutesResponseDTO with _$RoutesResponseDTO {
   factory RoutesResponseDTO(
       {required int duration,
       required int distance,
-      required List<StepsDTO> steps}) = _RoutesResponseDTO;
+      @Default([]) List<StepsDTO> steps}) = _RoutesResponseDTO;
 
   factory RoutesResponseDTO.fromJson(Map<String, dynamic> json) =>
       _$RoutesResponseDTOFromJson(json);
