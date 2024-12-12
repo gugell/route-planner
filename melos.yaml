@@ -6,6 +6,11 @@ packages:
 
 scripts:
   prepare: melos bootstrap
+  test:
+    description: Run all tests in all packages
+    run: |
+      melos exec -- \
+        flutter test --coverage
   post:boostrap: melos exec -- dart run build_runner build --delete-conflicting-outputs
 
 sdkPath: .fvm/flutter_sdk

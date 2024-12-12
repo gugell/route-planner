@@ -1,0 +1,5 @@
+{
+  "@@locale": "ru",
+  "greeting": "Hello, world!",
+  "newMessages": "{newMessages, plural, =0 {No new messages} =1 {One new message} other {{newMessages} new messages}}"
+}

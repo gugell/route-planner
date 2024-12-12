@@ -1,0 +1,64 @@
+{
+  "@@locale": "en",
+  "greeting": "Hello, world!",
+  "newMessages": "{newMessages, plural, =0 {No new messages} =1 {One new message} other {{newMessages} new messages}}",
+  "routingError": "Error: {message}",
+  "@routingError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "planRoute": "PlanRoute",
+  "from": "From",
+  "to": "To",
+  "submit": "Find a route",
+  "routeResults": "Route results",
+  "distance": "Distance",
+  "formattedDuration": "Duration: {duration}",
+  "@formattedDuration": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "formattedDistance": "Distance: {distance}",
+  "@formattedDistance": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+
+  "description": "Description",
+  "step": "Step {index}",
+  "@step": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "direction": "Direction: {direction}",
+  "@direction": {
+    "placeholders": {
+      "direction": {
+        "type": "String"
+      }
+    }
+  },
+  "formattedWeather": "Temperature: {temperature}°C\nDescription: {description}",
+  "@formattedWeather": {
+    "placeholders": {
+      "temperature": {
+        "type": "String"
+      },
+      "description": {
+        "type": "String"
+      }
+    }
+  }
+}

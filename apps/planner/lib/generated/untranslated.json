@@ -1,0 +1,17 @@
+{
+  "ru": [
+    "routingError",
+    "planRoute",
+    "from",
+    "to",
+    "submit",
+    "routeResults",
+    "distance",
+    "formattedDuration",
+    "formattedDistance",
+    "description",
+    "step",
+    "direction",
+    "formattedWeather"
+  ]
+}
