@@ -5,18 +5,20 @@ import 'package:latlong2/latlong.dart';
 
 class StepMarker extends Marker {
   final StepsDTO step;
+  final bool isSelected;
 
-  StepMarker({required this.step, required Function() onPressed})
+  StepMarker(
+      {required this.step, required this.isSelected, Function()? onPressed})
       : super(
-          width: 60.0,
-          height: 60.0,
+          width: isSelected ? 96 : 64,
+          height: isSelected ? 96 : 64,
           point: LatLng(step.location.lat, step.location.lng),
           child: IconButton(
               onPressed: onPressed,
-              icon: const Icon(
+              icon: Icon(
                 Icons.local_taxi_sharp,
-                size: 30,
-                color: Colors.red,
+                size: isSelected ? 48 : 32,
+                color: isSelected ? Colors.red : Colors.green,
               )),
         );
 }

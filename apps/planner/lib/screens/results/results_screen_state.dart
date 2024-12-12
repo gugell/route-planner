@@ -9,4 +9,8 @@ class ResultsScreenState with _$ResultsScreenState {
     required String description,
     required StepsDTO step,
   }) = WeatherLoadedForStep;
+
+  const factory ResultsScreenState.stepMoved({
+    required StepsDTO step,
+  }) = StepMoved;
 }

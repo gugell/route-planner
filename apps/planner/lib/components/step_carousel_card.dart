@@ -35,15 +35,13 @@ class StepCarouselCard extends StatelessWidget {
             Text('Step ${index + 1}',
                 style: const TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
-            Text('Direction: ${step.direction}'),
+            Text('Direction: ${_formattedDirection(step)}'),
             const SizedBox(height: 8),
             if (weather != null)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                      'Temperature: ${weather?['temperature'].toStringAsFixed(1)}°C'),
-                  Text('Description: ${weather?['description']}'),
+                  Text(_formattedWeather(weather)),
                 ],
               )
             else
@@ -52,5 +50,20 @@ class StepCarouselCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _formattedWeather(Map<String, dynamic>? weather) {
+    return 'Temperature: ${weather?['temperature'].toStringAsFixed(1)}°C\nDescription: ${weather?['description']}';
+  }
+
+  _formattedDirection(StepsDTO step) {
+    switch (step.direction) {
+      case 'turn-right':
+        return '->';
+      case 'turn-left':
+        return '<-';
+      default:
+        return '<>';
+    }
   }
 }
