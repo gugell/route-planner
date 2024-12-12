@@ -1,6 +1,7 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:planner/app/app_router.dart';
+import 'package:planner/l10n/global.dart';
 import 'package:planner/screens/route_planner/route_screen_bloc.dart';
 
 class RoutePlannerScreen extends StatelessWidget {
@@ -16,12 +17,12 @@ class RoutePlannerScreen extends StatelessWidget {
           _router.navigateTo(Routes.results, arguments: state.response);
         } else if (state is Error) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error: ${state.message}')),
+            SnackBar(content: Text(context.l10n.routingError(state.message))),
           );
         }
       },
       builder: (context, state) => Scaffold(
-          appBar: AppBar(title: const Text('Plan a Route')),
+          appBar: AppBar(title: Text(context.l10n.planRoute)),
           body: Padding(
               padding: EdgeInsets.all(16),
               child: Column(
@@ -29,12 +30,12 @@ class RoutePlannerScreen extends StatelessWidget {
                   TextField(
                     key: const Key('fromTextField'),
                     controller: _fromController,
-                    decoration: InputDecoration(labelText: 'From'),
+                    decoration: InputDecoration(labelText: context.l10n.from),
                   ),
                   TextField(
                     key: const Key('toTextField'),
                     controller: _toController,
-                    decoration: InputDecoration(labelText: 'To'),
+                    decoration: InputDecoration(labelText: context.l10n.to),
                   ),
                   SizedBox(height: 16),
                   ElevatedButton(
@@ -44,13 +45,10 @@ class RoutePlannerScreen extends StatelessWidget {
                             to: _toController.text,
                           ));
                     },
-                    child: Text('Get Route'),
+                    child: Text(context.l10n.submit),
                   ),
                   SizedBox(height: 16),
-                  if (state is Loading)
-                    CircularProgressIndicator()
-                  else if (state is Success)
-                    Text('Route Distance: ${state.response.distance}')
+                  if (state is Loading) CircularProgressIndicator()
                 ],
               ))),
     );

@@ -6,6 +6,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:planner/components/step_carousel_card.dart';
 import 'package:planner/components/step_marker.dart';
+import 'package:planner/l10n/global.dart';
 import 'package:planner/screens/results/results_screen_bloc.dart';
 
 class ResultsScreen extends StatelessWidget {
@@ -29,7 +30,7 @@ class ResultsScreen extends StatelessWidget {
         .toList();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Route Results')),
+      appBar: AppBar(title: Text(context.l10n.routeResults)),
       body: BlocConsumer<ResultsScreenBloc, ResultsScreenState>(
         listener: (context, state) {
           if (state is WeatherLoadedForStep) {

@@ -1,7 +1,9 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:planner/app/app_router.dart';
 import 'package:planner/common/di.dart';
+import 'package:planner/l10n/global.dart';
 import 'package:planner/screens/results/results_screen_bloc.dart';
 import 'package:planner/screens/route_planner/route_screen_bloc.dart';
 
@@ -26,6 +28,13 @@ class App extends StatelessWidget {
               create: (_) => sl<ResultsScreenBloc>())
         ],
         child: MaterialApp(
+          localizationsDelegates: const [
+            L10n.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: L10n.supportedLocales,
           navigatorKey: router.navigatorKey,
           onGenerateRoute: router.onGenerateRoute,
           initialRoute: Routes.home,

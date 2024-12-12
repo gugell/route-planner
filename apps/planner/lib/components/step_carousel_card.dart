@@ -1,5 +1,6 @@
 import 'package:core_api/api.dart';
 import 'package:flutter/material.dart';
+import 'package:planner/l10n/global.dart';
 
 class StepCarouselCard extends StatelessWidget {
   final StepsDTO step;
@@ -32,16 +33,18 @@ class StepCarouselCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Step ${index + 1}',
+            Text(context.l10n.step(index + 1),
                 style: const TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
-            Text('Direction: ${_formattedDirection(step)}'),
+            Text(context.l10n.direction(_formattedDirection(step))),
             const SizedBox(height: 8),
             if (weather != null)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(_formattedWeather(weather)),
+                  Text(context.l10n.formattedWeather(
+                      weather?['temperature'].toStringAsFixed(1),
+                      weather?['description'])),
                 ],
               )
             else
@@ -50,10 +53,6 @@ class StepCarouselCard extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  _formattedWeather(Map<String, dynamic>? weather) {
-    return 'Temperature: ${weather?['temperature'].toStringAsFixed(1)}°C\nDescription: ${weather?['description']}';
   }
 
   _formattedDirection(StepsDTO step) {
