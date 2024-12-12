@@ -149,6 +149,18 @@ abstract class L10n {
   /// **'Distance'**
   String get distance;
 
+  /// No description provided for @formattedDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration: {duration}'**
+  String formattedDuration(String duration);
+
+  /// No description provided for @formattedDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance: {distance}'**
+  String formattedDistance(String distance);
+
   /// No description provided for @description.
   ///
   /// In en, this message translates to:

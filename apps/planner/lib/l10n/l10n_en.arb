@@ -16,6 +16,23 @@
   "submit": "Find a route",
   "routeResults": "Route results",
   "distance": "Distance",
+  "formattedDuration": "Duration: {duration}",
+  "@formattedDuration": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "formattedDistance": "Distance: {distance}",
+  "@formattedDistance": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+
   "description": "Description",
   "step": "Step {index}",
   "@step": {

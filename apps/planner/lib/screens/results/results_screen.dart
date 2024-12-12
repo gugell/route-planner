@@ -30,98 +30,140 @@ class ResultsScreen extends StatelessWidget {
         .toList();
 
     return Scaffold(
-      appBar: AppBar(title: Text(context.l10n.routeResults)),
-      body: BlocConsumer<ResultsScreenBloc, ResultsScreenState>(
-        listener: (context, state) {
-          if (state is WeatherLoadedForStep) {
-            // Weather data is already handled by the Bloc; UI updates automatically
-          } else if (state is Error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
-          }
-        },
-        builder: (context, state) {
-          return Stack(
-            children: [
-              FlutterMap(
-                mapController: context.read<ResultsScreenBloc>().mapController,
-                options: MapOptions(
-                  initialCenter: LatLng(
-                    route.steps.first.location.lat,
-                    route.steps.first.location.lng,
-                  ),
-                  initialZoom: 16.0,
-                  maxZoom: 18.0,
+        appBar: AppBar(title: Text(context.l10n.routeResults)),
+        body: Column(children: [
+          // Distance and Duration Display
+          Container(
+            color: Colors.blueGrey[50],
+            padding:
+                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  context.l10n
+                      .formattedDistance(_formatDistance(route.distance)),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
                 ),
+                Text(
+                  context.l10n
+                      .formattedDuration(_formatDuration(route.duration)),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+              child: BlocConsumer<ResultsScreenBloc, ResultsScreenState>(
+            listener: (context, state) {
+              if (state is WeatherLoadedForStep) {
+                // Weather data is already handled by the Bloc; UI updates automatically
+              } else if (state is Error) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(state.message)),
+                );
+              }
+            },
+            builder: (context, state) {
+              return Stack(
                 children: [
-                  TileLayer(
-                    urlTemplate:
-                        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  ),
-                  PolylineLayer(
-                    polylines: [
-                      Polyline(
-                        points: polylinePoints,
-                        strokeWidth: 4.0,
-                        color: Colors.blue,
+                  FlutterMap(
+                    mapController:
+                        context.read<ResultsScreenBloc>().mapController,
+                    options: MapOptions(
+                      initialCenter: LatLng(
+                        route.steps.first.location.lat,
+                        route.steps.first.location.lng,
                       ),
+                      initialZoom: 16.0,
+                      maxZoom: 18.0,
+                    ),
+                    children: [
+                      TileLayer(
+                        urlTemplate:
+                            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      ),
+                      PolylineLayer(
+                        polylines: [
+                          Polyline(
+                            points: polylinePoints,
+                            strokeWidth: 4.0,
+                            color: Colors.blue,
+                          ),
+                        ],
+                      ),
+                      MarkerLayer(
+                          markers: route.steps.indexed
+                              .map((i) => StepMarker(
+                                  step: i.$2,
+                                  isSelected: i.$1 == _selectedIndex,
+                                  onPressed: () => context
+                                      .read<ResultsScreenBloc>()
+                                      .carouselController
+                                      .jumpToPage(i.$1)))
+                              .toList()),
                     ],
                   ),
-                  MarkerLayer(
-                      markers: route.steps.indexed
-                          .map((i) => StepMarker(
-                              step: i.$2,
-                              isSelected: i.$1 == _selectedIndex,
-                              onPressed: () => context
-                                  .read<ResultsScreenBloc>()
-                                  .carouselController
-                                  .jumpToPage(i.$1)))
-                          .toList()),
-                ],
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: CarouselSlider.builder(
-                  carouselController:
-                      context.read<ResultsScreenBloc>().carouselController,
-                  itemCount: route.steps.length,
-                  itemBuilder: (context, index, realIndex) {
-                    final step = route.steps[index];
-                    final weatherCache = context
-                        .read<ResultsScreenBloc>()
-                        .weatherCache[_getCacheKey(step)];
-                    return StepCarouselCard(
-                      step: step,
-                      index: index,
-                      weather: weatherCache,
-                    );
-                  },
-                  options: CarouselOptions(
-                    height: 200.0,
-                    enableInfiniteScroll: false,
-                    enlargeCenterPage: true,
-                    onPageChanged: (index, reason) {
-                      _selectedIndex = index;
-                      final step = route.steps[index];
-                      context
-                          .read<ResultsScreenBloc>()
-                          .add(MoveToStep(step: step));
-                      context
-                          .read<ResultsScreenBloc>()
-                          .add(FetchWeatherForStep(step: step));
-                    },
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: CarouselSlider.builder(
+                      carouselController:
+                          context.read<ResultsScreenBloc>().carouselController,
+                      itemCount: route.steps.length,
+                      itemBuilder: (context, index, realIndex) {
+                        final step = route.steps[index];
+                        final weatherCache = context
+                            .read<ResultsScreenBloc>()
+                            .weatherCache[_getCacheKey(step)];
+                        return StepCarouselCard(
+                          step: step,
+                          index: index,
+                          weather: weatherCache,
+                        );
+                      },
+                      options: CarouselOptions(
+                        height: 200.0,
+                        enableInfiniteScroll: false,
+                        enlargeCenterPage: true,
+                        onPageChanged: (index, reason) {
+                          _selectedIndex = index;
+                          final step = route.steps[index];
+                          context
+                              .read<ResultsScreenBloc>()
+                              .add(MoveToStep(step: step));
+                          context
+                              .read<ResultsScreenBloc>()
+                              .add(FetchWeatherForStep(step: step));
+                        },
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
+                ],
+              );
+            },
+          )),
+        ]));
   }
 
   String _getCacheKey(StepsDTO step) {
     return '${step.location.lat},${step.location.lng}';
+  }
+
+  String _formatDistance(int distanceInMeters) {
+    if (distanceInMeters >= 1000) {
+      return '${(distanceInMeters / 1000).toStringAsFixed(1)} km';
+    }
+    return '${distanceInMeters.toStringAsFixed(0)} m';
+  }
+
+  String _formatDuration(int durationInSeconds) {
+    final hours = durationInSeconds ~/ 3600;
+    final minutes = (durationInSeconds % 3600) ~/ 60;
+    if (hours > 0) {
+      return '${hours}h ${minutes}m';
+    }
+    return '${minutes}m';
   }
 }

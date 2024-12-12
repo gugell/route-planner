@@ -7,6 +7,8 @@
     "submit",
     "routeResults",
     "distance",
+    "formattedDuration",
+    "formattedDistance",
     "description",
     "step",
     "direction",

@@ -47,6 +47,16 @@ class L10nRu extends L10n {
   String get distance => 'Distance';
 
   @override
+  String formattedDuration(String duration) {
+    return 'Duration: $duration';
+  }
+
+  @override
+  String formattedDistance(String distance) {
+    return 'Distance: $distance';
+  }
+
+  @override
   String get description => 'Description';
 
   @override

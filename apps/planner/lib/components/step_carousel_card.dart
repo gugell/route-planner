@@ -28,30 +28,38 @@ class StepCarouselCard extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(context.l10n.step(index + 1),
-                style: const TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            Text(context.l10n.direction(_formattedDirection(step))),
-            const SizedBox(height: 8),
-            if (weather != null)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(context.l10n.formattedWeather(
-                      weather?['temperature'].toStringAsFixed(1),
-                      weather?['description'])),
-                ],
-              )
-            else
-              const Center(child: CircularProgressIndicator()),
-          ],
-        ),
-      ),
+          padding: const EdgeInsets.all(16.0),
+          child: Row(children: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(context.l10n.step(index + 1),
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                const SizedBox(height: 8),
+                if (weather != null)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(context.l10n.formattedWeather(
+                          weather?['temperature'].toStringAsFixed(1),
+                          weather?['description'])),
+                    ],
+                  )
+                else
+                  const Center(child: CircularProgressIndicator()),
+              ],
+            ),
+            const Spacer(),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(_formattedDirection(step),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 64)),
+              ],
+            ),
+          ])),
     );
   }
 
